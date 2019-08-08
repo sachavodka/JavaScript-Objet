@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Utilisation d' Objets en JavaScript </title>
+    <style>
+        @font-face {
+            font-family: "JusticeLeague-25m8";
+            src: url("JusticeLeague-25m8.ttf") format("truetype");
+        }
+        
+        body {
+            background-image: url("img/fond.png");
+        }
+        
+        h1 {
+            font-family: "JusticeLeague-25m8";
+            text-align: center;
+            color: rgba(94, 255, 0, 0.452);
+            font-size: 60px;
+        }
+        
+        h2 {
+            background-color: black;
+            color: white;
+            margin: 0px;
+            text-align: center;
+        }
+        
+        .titre2 {
+            display: block;
+            font-size: 25px;
+            color: aliceblue;
+            padding-top: 10px;
+        }
+        
+        #monobjet {
+            /* flex: 1 1 auto;
+            max-width: 250px;
+            min-width: 130px;
+            object-fit: cover; */
+            /* position: relative; */
+            box-shadow: 1px 0px 3px black;
+            background-color: rgba(60, 216, 21, 0.432);
+            margin: 10px;
+            padding: 5px;
+            width: 200px;
+        }
+        
+        p {
+            color: honeydew;
+            margin: 10px;
+        }
+        
+        span {
+            display: inline-block;
+        }
+        
+        #monespece {
+            text-align: center;
+            width: 200px;
+            margin: auto;
+            color: rgb(15, 15, 15);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        img {
+            width: 100%;
+            margin: auto;
+        }
+        
+        .cine {
+            background-color: rgba(219, 223, 29, 0.596);
+            margin: 3px;
+            color: rgb(37, 38, 39);
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", function() {
+            var hulk = {
+                    nom: "Hulk",
+                    sexe: "Masculin",
+                    identite: "Bruce Banner",
+                    espece: "Humain altéré",
+                    image: "img/hulk.png",
+                    createurs: {
+                        pere1: "Stan Lee",
+                        pere2: "Jack Kirby"
+                    },
+
+                    edition: "Marvel Comics",
+
+                    display: function() {
+                        var html = "";
+                        html = "<div id='monobjet'>";
+                        html += "<h2>" + this.nom + "</h2>";
+                        html += "<span class='titre2'>" + this.identite + "<br>genre : <i>" + this.sexe + "</i></span>";
+                        html += "<p><img src='" + this.image + "'></p>";
+                        html += "<p id='monespece'>" + this.espece + "</p>";
+                        html += "<p> Mes créateurs : " + this.createurs.pere1 + ", " + this.createurs.pere2 + "</p>";
+                        html += "<p> Editions : " + this.edition + "</p>";
+                        html += "</div>";
+                        return html;
+                    }
+                }
+                // Programme principal
+                // var monobjet = document.getElementById("select");
+                // monobjet.innerHTML = hulk.display();
+
+            class PersonnageBD {
+
+                constructor(monnom, monsexe, monidentite, monespece, imagebd, mescreateurs, edition) {
+
+                    this.nom = monnom;
+                    this.sexe = monsexe;
+                    this.identite = monidentite;
+                    this.espece = monespece;
+                    this.image = imagebd;
+                    this.createurs = mescreateurs;
+                    this.edition = edition;
+
+                };
+
+                display() {
+
+                    var html = "";
+                    html += "<h2>" + this.nom + "</h2>";
+                    html += "<span class='titre2'>" + this.identite + "<br>genre : <i>" + this.sexe + "</i></span>";
+                    html += "<p><img src='" + this.image + "'></p>";
+                    html += "<p id='monespece'>" + this.espece + "</p>";
+                    html += "<p> Mes créateurs : ";
+                    for (var i = 0; i < this.createurs.length; i++) {
+                        html += this.createurs[i] + (i != this.createurs.length - 1 ? ", " : " ");
+                    }
+                    html += "</p>";
+                    html += "<p> Editions : " + this.edition + "</p>";
+                    return html;
+
+                };
+
+            }
+
+            class PersonnageCine extends PersonnageBD {
+
+                constructor(monnom, monsexe, monidentite, monespece, imagebd, mescreateurs, edition, films, acteur, annee) {
+
+                    super(monnom, monsexe, monidentite, monespece, imagebd, mescreateurs, edition);
+
+                    this.films = films;
+                    this.acteur = acteur;
+                    this.annee = annee;
+
+                };
+
+                // Exemple de méthode statique qui ne s'applique pas à une instance mais à la classe
+                // directement. On ne peut donc pas utiliser le mot clef this dans le corps de cette
+                // méthode.
+                static lecture_proprietes(param1, param2) {
+
+                    return console.log("Le(s) Films : " + param1 + " est (sont) sorti(s) en salle en " + param2);
+
+                };
+
+                afficher() {
+
+                    // Affichage des informations spécifiques à cette classe PersonnageCine.
+                    var html = "";
+                    html += "<p class='cine'> Films : ";
+                    for (var i = 0; i < this.films.length; i++) {
+                        html += this.films[i] + (i != this.films.length - 1 ? ", " : " ");
+                    }
+                    html += "</p>";
+                    html += "<p class='cine'>" + this.acteur + "</p>";
+                    html += "<p class='cine'> 1 ère Année de sortie : " + this.annee + "</p>";
+
+                    // On fait appel à la méthode de la classe parente que l'on peut enrichir avec les informations
+                    // de la méthode de la classe PersonnageCine.
+                    return super.display() + html;
+                };
+
+
+            }
+
+            // var hulk = new PersonnageBD("Hulk", "Masculin", "Bruce Banner", "Humain altéré", "img/hulk.png", ["Stan Lee", "Jack Kirby"], "Marvel Comics");
+            // var thor = new PersonnageBD("Thor", "Masculin", "Thor Odinson", "Asgardien", "img/thor.png", ["Stan Lee", "Jack Kirby"], "Marvel Comics");
+            // var spiderman = new PersonnageBD("Spiderman", "Masculin", "Peter Parker", "Humain altéré", "img/spiderman.png", ["Stan Lee", "Steve Ditko"], "Marvel Comics");
+            // var captainamerica = new PersonnageBD("Captaine America", "Masculin", "Steve Rogers", "Humain", "img/captaine_america.png", ["Joe Simon", "Jack Kirby"], "Marvel Comics");
+            // var ironman = new PersonnageBD("Iron Man", "Masculin", "Tony Stark", "Humain", "img/iron_man.png", ["Joe Simon", "Jack Kirby", "Lary Lieber"], "Marvel Comics");
+            // var wonderwoman = new PersonnageBD("Wonder Woman", "Féminin", "Princesse Diana", "Amazone", "img/Wonder_Woman.png", ["William Marston", "H. G. Peter"], "DC Comics");
+            // var groot = new PersonnageBD("Groot", "Masculin", "Ptit' Groot", "Gardiens de la Galaxie", "img/Groot.png", ["Stan Lee", "Jack Kirby", "Dick Ayers"], "Marvel Comics");
+            // var blackwidow = new PersonnageBD("Black Widow", "Féminin", "Natasha Romanoff", "Humain", "img/Black_Widow.png", ["Stan Lee", "Don Rico", "Don Heck"], "Marvel Comics");
+
+            // var TabPersonnages = new Array(wonderwoman, hulk, thor, spiderman, ironman, blackwidow);
+
+            var hulk = new PersonnageCine("Hulk", "Masculin", "Bruce Banner", "Humain altéré", "img/hulk.png", ["Stan Lee", "Jack Kirby"], "Marvel Comics", ["L'incroyable Hulk"], "Eric Bana", 2003);
+            var thor = new PersonnageCine("Thor", "Masculin", "Thor Odinson", "Asgardien", "img/thor.png", ["Stan Lee", "Jack Kirby"], "Marvel Comics", ["Thor", "Avengers", "Docteur Strange"], "Chris Hemsworth", 2011);
+            var spiderman = new PersonnageCine("Spiderman", "Masculin", "Peter Parker", "Humain altéré", "img/spiderman.png", ["Stan Lee", "Steve Ditko"], "Marvel Comics", ["Spiderman 1, Spiderman 2", "Spiderman 3"], "Tobey Maguire", 2002);
+            var captainamerica = new PersonnageCine("Captaine America", "Masculin", "Steve Rogers", "Humain", "img/captaine_america.png", ["Joe Simon", "Jack Kirby"], "Marvel Comics", ["Captain America First Avenger"], "Chris Evans", 2011);
+            var ironman = new PersonnageCine("Iron Man", "Masculin", "Tony Stark", "Humain", "img/iron_man.png", ["Joe Simon", "Jack Kirby", "Lary Lieber"], "Marvel Comics", ["Iron Man 1", "Iron Man 2", "Iron Man 3"], "Robert Downey Junior", 2008);
+            var wonderwoman = new PersonnageCine("Wonder Woman", "Féminin", "Princesse Diana", "Amazone", "img/Wonder_Woman.png", ["William Marston", "H. G. Peter"], "DC Comics", ["Wonder-Woman"], "Gal Gadot", 2017);
+            var groot = new PersonnageCine("Groot", "Masculin", "Ptit' Groot", "Gardiens de la Galaxie", "img/Groot.png", ["Stan Lee", "Jack Kirby", "Dick Ayers"], "Marvel Comics", ["Les Gardiens de la Galaxie 1", "Les Gardiens de la Galaxie 2"], "Bradley Cooper", 2014);
+            var blackwidow = new PersonnageCine("Black Widow", "Féminin", "Natasha Romanoff", "Humain", "img/Black_Widow.png", ["Stan Lee", "Don Rico", "Don Heck"], "Marvel Comics", ["Avengers"], "Scarlett Johansson", 2012);
+
+            var TabPersonnages = new Array(hulk, thor, ironman, spiderman, wonderwoman, groot, captainamerica, blackwidow);
+
+            PersonnageCine.lecture_proprietes(hulk.films, hulk.annee);
+
+            var monobjet = document.getElementById("select");
+            for (var i = 0; i < TabPersonnages.length; i++) {
+                var e = document.createElement("span");
+                var a = document.createAttribute("id");
+                a.value = "monobjet";
+                e.setAttributeNode(a);
+                e.innerHTML = TabPersonnages[i].afficher();
+                monobjet.appendChild(e);
+            }
+
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Utilisation d'Objets en JavScript</h1>
+    <div id="select"></div>
+</body>
+
+</html>
