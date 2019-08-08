@@ -110,8 +110,8 @@
                     }
                 }
                 // Programme principal
-                // var monobjet = document.getElementById("select");
-                // monobjet.innerHTML = hulk.display();
+            var monobjet = document.getElementById("select");
+            monobjet.innerHTML = hulk.display();
 
             class PersonnageBD {
 
@@ -211,15 +211,15 @@
 
             PersonnageCine.lecture_proprietes(hulk.films, hulk.annee);
 
-            var monobjet = document.getElementById("select");
-            for (var i = 0; i < TabPersonnages.length; i++) {
-                var e = document.createElement("span");
-                var a = document.createAttribute("id");
-                a.value = "monobjet";
-                e.setAttributeNode(a);
-                e.innerHTML = TabPersonnages[i].afficher();
-                monobjet.appendChild(e);
-            }
+            // var monobjet = document.getElementById("select");
+            // for (var i = 0; i < TabPersonnages.length; i++) {
+            //     var e = document.createElement("span");
+            //     var a = document.createAttribute("id");
+            //     a.value = "monobjet";
+            //     e.setAttributeNode(a);
+            //     e.innerHTML = TabPersonnages[i].afficher();
+            //     monobjet.appendChild(e);
+            // }
 
         });
     </script>
